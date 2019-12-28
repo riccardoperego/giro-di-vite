@@ -1,5 +1,7 @@
 {
   "name": "giroDiVite",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
