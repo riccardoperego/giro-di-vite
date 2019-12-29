@@ -4,25 +4,14 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss']
+  styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-
   inAppBroweserOptions: InAppBrowserOptions | string;
-
   constructor(private iab: InAppBrowser) {}
 
   ngOnInit(): void {
-
-    // this.inAppBroweserOptions = {
-    //   location: 'no',
-    //   zoom: 'no',
-    //   hideurlbar: 'yes',
-    //   hidenavigationbuttons: 'yes',
-    // };
-
     this.inAppBroweserOptions = 'location=no,hideurlbar=yes,hidenavigationbuttons=yes';
-    console.log('OnInit!');
   }
 
   ionViewDidEnter(): void {
@@ -34,4 +23,5 @@ export class HomePage implements OnInit {
     console.log('did enter!');
 
   }
+
 }
