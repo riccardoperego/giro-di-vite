@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -7,21 +8,37 @@ import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  inAppBroweserOptions: InAppBrowserOptions | string;
   constructor(private iab: InAppBrowser) {}
+  onExit: Subscription;
+  inAppBroweserOptions = 'location=no,hideurlbar=yes,hidenavigationbuttons=yes';
 
   ngOnInit(): void {
-    this.inAppBroweserOptions = 'location=no,hideurlbar=yes,hidenavigationbuttons=yes';
+    this.startWebSite();
   }
 
-  ionViewDidEnter(): void {
-    this.iab.create(
+  startWebSite(): void {
+
+    console.log('start website!');
+
+    if (this.onExit) {
+      this.onExit.unsubscribe();
+    }
+
+    const ref = this.iab.create(
       'https://sites.google.com/view/plg-girodivite/home',
-      '_self',
+      '_blank',
       this.inAppBroweserOptions
     );
-    console.log('did enter!');
 
+    this.onExit = ref.on('exit').subscribe(event => {
+      console.log('exit fired, relaunching the website');
+      setTimeout(() => {
+        this.startWebSite();
+      }, 300);
+      this.startWebSite();
+    });
   }
+
+
 
 }
